@@ -1,0 +1,100 @@
+name: PR CI
+
+on:
+  workflow_dispatch:               # allow manual runs from Actions
+  push:
+    branches:
+      - '**'                       # run on any branch push
+  pull_request:
+    branches:
+      - main
+      - next-release
+
+jobs:
+  setup:
+    name: Setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@v2
+      - name: Prepare environment
+        run: |
+          if [ -f pyproject.toml ]; then
+            # for feature branches we don’t need to pull *all* heavy extras
+            if [ "${{ github.ref }}" = "refs/heads/main" ] || [ "${{ github.ref }}" = "refs/heads/next-release" ]; then
+              uv sync --all-extras --dev
+            else
+              uv sync --dev
+            fi
+          elif [ -f requirements.txt ]; then
+            uv pip install --system -r requirements.txt
+          fi
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@v2
+      - name: Prepare environment
+        run: |
+          if [ -f pyproject.toml ]; then
+            if [ "${{ github.ref }}" = "refs/heads/main" ] || [ "${{ github.ref }}" = "refs/heads/next-release" ]; then
+              uv sync --all-extras --dev
+            else
+              uv sync --dev
+            fi
+          elif [ -f requirements.txt ]; then
+            uv pip install --system -r requirements.txt
+          fi
+      - name: Run linters
+        run: |
+          files="$(git ls-files '*.py')"
+          if [ -n "$files" ]; then
+            if [ -f pyproject.toml ]; then
+              uv run python -m py_compile $files
+            else
+              python -m py_compile $files
+            fi
+          fi
+          if [ -f pyproject.toml ]; then
+            uv run ruff .
+          else
+            uv tool run --from ruff ruff .
+          fi
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@v2
+      - name: Prepare environment
+        run: |
+          if [ -f pyproject.toml ]; then
+            if [ "${{ github.ref }}" = "refs/heads/main" ] || [ "${{ github.ref }}" = "refs/heads/next-release" ]; then
+              uv sync --all-extras --dev
+            else
+              uv sync --dev
+            fi
+          elif [ -f requirements.txt ]; then
+            uv pip install --system -r requirements.txt
+          fi
+      - name: Run tests
+        run: |
+          if [ -f pyproject.toml ]; then
+            uv run pytest -q
+          else
+            uv tool run --from pytest pytest -q
+          fi

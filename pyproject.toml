@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "architecture"
+version = "0.1.0"
+description = "Transformer architecture"
+readme = "README.md"
+authors = [
+  { name = "SotonLM" }
+]
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "scipy>=1.11",
+  "scikit-learn>=1.4",
+  "torch>=2.1",
+  "transformers>=4.35",
+  "datasets>=2.14",
+  "accelerate>=0.24",
+  "evaluate>=0.4",
+  "sentencepiece>=0.1.99",
+  "rich>=13.6",
+]
+
+[project.optional-dependencies]
+dev = [
+  "black>=23.9",
+  "ruff>=0.1.13",
+  "pytest>=7.4",
+  "pytest-cov>=4.1",
+  "mypy>=1.6",
+  "ipykernel>=6.25",
+]
+notebook = [
+  "jupyterlab>=4.0",
+  "matplotlib>=3.8",
+  "seaborn>=0.13",
+]
+
+# tell hatch exactly what to package
+[tool.hatch.build.targets.wheel]
+packages = ["architecture"]
+
+[tool.hatch.build.targets.sdist]
+include = ["architecture", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.black]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
