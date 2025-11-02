@@ -19,7 +19,12 @@ jobs:
       - name: Prepare environment
         run: |
           if [ -f pyproject.toml ]; then
-            uv sync --all-extras --dev
+            # for feature branches we don't need to pull *all* heavy extras
+            if [ "${{ github.ref }}" = "refs/heads/main" ] || [ "${{ github.ref }}" = "refs/heads/next-release" ]; then
+              uv sync --all-extras --dev
+            else
+              uv sync --dev
+            fi
           elif [ -f requirements.txt ]; then
             uv pip install --system -r requirements.txt
           fi
@@ -37,7 +42,12 @@ jobs:
       - name: Prepare environment
         run: |
           if [ -f pyproject.toml ]; then
-            uv sync --all-extras --dev
+            if [ "${{ github.ref }}" = "refs/heads/main" ] || [ "${{ github.ref }}" = "refs/heads/next-release" ]; then
+              uv sync --all-extras --dev
+            else
+              uv sync --dev
+            fi
+            uv pip install --system ".[dev]"
           elif [ -f requirements.txt ]; then
             uv pip install --system -r requirements.txt
           fi
@@ -45,18 +55,9 @@ jobs:
         run: |
           files="$(git ls-files '*.py')"
           if [ -n "$files" ]; then
-            if [ -f pyproject.toml ]; then
-              uv run python -m py_compile $files || true
-            else
-              python -m py_compile $files || true
-            fi
+            python -m py_compile $files
           fi
-          if [ -f pyproject.toml ]; then
-            uv run ruff . || true
-          else
-            uv tool run --from ruff ruff . || true
-          fi
-    continue-on-error: false
+          python -m ruff .
 
   tests:
     name: Tests
@@ -71,14 +72,15 @@ jobs:
       - name: Prepare environment
         run: |
           if [ -f pyproject.toml ]; then
-            uv sync --all-extras --dev
+            if [ "${{ github.ref }}" = "refs/heads/main" ] || [ "${{ github.ref }}" = "refs/heads/next-release" ]; then
+              uv sync --all-extras --dev
+            else
+              uv sync --dev
+            fi
+            uv pip install --system ".[dev]"
           elif [ -f requirements.txt ]; then
             uv pip install --system -r requirements.txt
           fi
       - name: Run tests
         run: |
-          if [ -f pyproject.toml ]; then
-            uv run pytest -q
-          else
-            uv tool run --from pytest pytest -q
-          fi
+          python -m pytest -q
