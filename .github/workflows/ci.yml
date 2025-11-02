@@ -57,7 +57,7 @@ jobs:
           if [ -n "$files" ]; then
             python -m py_compile $files
           fi
-          python -m ruff .
+          python -m ruff check .
 
   tests:
     name: Tests
