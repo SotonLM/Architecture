@@ -1,0 +1,20 @@
+documentation:
+  - "**/*.md"
+  - "docs/**"
+
+ci:
+  - ".github/workflows/**"
+  - "scripts/ci/**"
+
+dependencies:
+  - "package-lock.json"
+  - "yarn.lock"
+  - "pnpm-lock.yaml"
+  - "requirements.txt"
+  - "pyproject.toml"
+  - "poetry.lock"
+
+tests:
+  - "**/test/**"
+  - "**/tests/**"
+  - "**/__tests__/**"
