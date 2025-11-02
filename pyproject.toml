@@ -41,6 +41,9 @@ notebook = [
   "seaborn>=0.13"
 ]
 
+[tool.uv]
+develop = ["dev"]
+
 [tool.pytest.ini_options]
 addopts = "-ra"
 filterwarnings = ["ignore::DeprecationWarning"]
