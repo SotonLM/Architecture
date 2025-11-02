@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - uses: astral-sh/setup-uv@v2
+      - uses: astral-sh/setup-uv@v7
       - name: Prepare environment
         run: |
           if [ -f pyproject.toml ]; then
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - uses: astral-sh/setup-uv@v2
+      - uses: astral-sh/setup-uv@v7
       - name: Prepare environment
         run: |
           if [ -f pyproject.toml ]; then
@@ -68,7 +68,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - uses: astral-sh/setup-uv@v2
+      - uses: astral-sh/setup-uv@v7
       - name: Prepare environment
         run: |
           if [ -f pyproject.toml ]; then
