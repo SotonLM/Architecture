@@ -55,17 +55,12 @@ uv sync
 
 **For experimentation**: Use the playground files (`playground_*.py`) to test your ideas. They include test code you can run immediately.
 
-**For final validation**: Use `python validate.py` to test your final solutions. The test code is hidden to encourage learning through implementation rather than reverse-engineering from tests.
+Each playground file has its own test functions that you can run:
+- `python playground_basics.py` - Test Problem 1
+- `python playground_attention.py` - Test Problems 2 and 4
+- `python playground_positional_encoding.py` - Test Problem 3
 
-```bash
-# Using uv (if installed)
-uv run python validate.py
-
-# Or using pip/python directly
-python validate.py
-```
-
-**Note**: The `hidden_tests.py` file contains test implementations. For best learning, try not to look at it until after you've attempted the problems!
+**Note**: The validation system will be available later for final testing.
 
 ## Workflow
 
