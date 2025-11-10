@@ -1,10 +1,17 @@
 # Transformer Architecture Exercises
 
-This repository contains hands-on exercises to implement key components of the transformer architecture.
+This directory contains hands-on exercises to implement key components of the transformer architecture.
 
-## Exercises
+## Getting Started
 
-See [QUESTIONS.md](QUESTIONS.md) for exercise questions.
+1. Navigate into this directory:
+   ```bash
+   cd practice
+   ```
+
+2. Install dependencies (see Setup section below)
+
+3. Read [QUESTIONS.md](QUESTIONS.md) for exercise questions
 
 **Time allocated: 30 minutes**
 
@@ -62,11 +69,18 @@ python validate.py
 
 ## Workflow
 
-1. Read `QUESTIONS.md` to understand the problems
-2. Use playground files to experiment and test your ideas
-3. Implement solutions in `architecture/*.py` files
-4. Test your implementations with `python validate.py`
-5. Submit your solutions when complete
+1. Make sure you're in the `practice/` directory
+2. Read `QUESTIONS.md` to understand the problems
+3. Use playground files to experiment and test your ideas
+4. Implement solutions in `architecture/*.py` files
+5. Test your implementations with `python validate.py`
+6. Submit your solutions when complete
+
+## Important Notes
+
+- All commands should be run from within the `practice/` directory
+- Make sure to `cd practice` first before running any scripts
+- The `validate.py` script should be run from the `practice/` directory
 
 Good luck! 🚀
 
