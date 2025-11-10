@@ -41,8 +41,17 @@ notebook = [
   "seaborn>=0.13"
 ]
 
+<<<<<<< Updated upstream
 [tool.uv]
 develop = ["dev"]
+=======
+# tell hatch exactly what to package
+[tool.hatch.build.targets.wheel]
+packages = ["src/architecture"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "README.md", "LICENSE", "pyproject.toml"]
+>>>>>>> Stashed changes
 
 [tool.pytest.ini_options]
 addopts = "-ra"
