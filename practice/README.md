@@ -68,14 +68,14 @@ Each playground file has its own test functions that you can run:
 2. Read `QUESTIONS.md` to understand the problems
 3. Use playground files to experiment and test your ideas
 4. Implement solutions in `architecture/*.py` files
-5. Test your implementations with `python validate.py`
+5. Test your implementations using the playground files
 6. Submit your solutions when complete
 
 ## Important Notes
 
 - All commands should be run from within the `practice/` directory
 - Make sure to `cd practice` first before running any scripts
-- The `validate.py` script should be run from the `practice/` directory
+- Use the playground files to test your implementations as you work
 
 Good luck! 🚀
 
